@@ -5,11 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.List;
+import javax.validation.constraints.Size;
+import java.util.*;
 
 @Setter
 @Getter
@@ -19,6 +19,9 @@ public class TeamDTO {
 
     private String teamId;
 
+    @NotBlank
+    @Indexed(unique = true)
+    @Size(min = 1, max = 3)
     private String codeTeam;
 
     @NotBlank
@@ -27,10 +30,18 @@ public class TeamDTO {
     @NotBlank
     private String country;
 
-    @NotNull
-    @Length.List( {
-        @Length(min = 1, message = "Debe tener al menos un ciclista"),
-        @Length(max = 4, message = "Debe tener máximo 8 ciclistas")
-    } )
-    private List<Cyclist> cyclists;
+//    @Length.List(@Length(max = 8, message = "Debe tener máximo 8 ciclistas"))
+    private Set<Cyclist> cyclists;
+
+    public TeamDTO(String teamId, String name, String codeTeam, String country) {
+        this.teamId = teamId;
+        this.name = name;
+        this.codeTeam = codeTeam;
+        this.country = country;
+    }
+
+    public Set<Cyclist> getCyclists() {
+        this.cyclists = Optional.ofNullable(cyclists).orElse(new HashSet<>());
+        return cyclists;
+    }
 }

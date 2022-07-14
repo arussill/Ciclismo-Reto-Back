@@ -16,7 +16,6 @@ public class TeamMapper {
             team.setName(teamDTO.getName());
             team.setCodeTeam(teamDTO.getCodeTeam());
             team.setCountry(teamDTO.getCountry());
-            team.setCyclists(teamDTO.getCyclists());
             return team;
         };
     }
@@ -26,8 +25,7 @@ public class TeamMapper {
                 team.getTeamId(),
                 team.getName(),
                 team.getCodeTeam(),
-                team.getCountry(),
-                team.getCyclists()
+                team.getCountry()
         );
     }
 }

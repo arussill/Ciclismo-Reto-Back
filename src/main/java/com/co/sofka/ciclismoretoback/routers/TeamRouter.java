@@ -23,7 +23,7 @@ public class TeamRouter {
     public RouterFunction<ServerResponse> registerTeam(RegisterTeamUseCase registerTeamUseCase) {
         Function<TeamDTO, Mono<ServerResponse>> execute = teamDTO ->
                 registerTeamUseCase.apply(teamDTO)
-                        .flatMap(team -> ServerResponse.ok().contentType(MediaType.TEXT_PLAIN).bodyValue(team));
+                        .flatMap(result -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).bodyValue(result));
         return route(POST("/registerTeam").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(TeamDTO.class).flatMap(execute)
         );

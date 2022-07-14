@@ -22,7 +22,9 @@ public class RegisterTeamUseCase implements SaveTeam {
     @Override
     public Mono<TeamDTO> apply(TeamDTO teamDTO) {
         return teamRepository.save((teamMapper.teamDTOToTeam(null).apply(teamDTO)))
-                .map(team -> teamMapper.teamToTeamDTO().apply(team));
+                .map(team -> teamMapper.teamToTeamDTO().apply(team))
+                .onErrorResume(error -> {
+                    return Mono.error(new RuntimeException("Cycling team existente"));
+                });
     }
-
 }
