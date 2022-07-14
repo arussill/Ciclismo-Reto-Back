@@ -9,7 +9,7 @@ import java.util.function.Function;
 @Component
 public class TeamMapper {
 
-    public Function<TeamDTO, Team> TeamDTOToTeam(String id) {
+    public Function<TeamDTO, Team> teamDTOToTeam(String id) {
         return teamDTO -> {
             var team = new Team();
             team.setTeamId(teamDTO.getTeamId());
@@ -21,7 +21,7 @@ public class TeamMapper {
         };
     }
 
-    public Function <Team, TeamDTO> TeamToTeamDTO() {
+    public Function <Team, TeamDTO> teamToTeamDTO() {
         return team -> new TeamDTO(
                 team.getTeamId(),
                 team.getName(),

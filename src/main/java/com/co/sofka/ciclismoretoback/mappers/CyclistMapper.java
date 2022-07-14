@@ -9,7 +9,7 @@ import java.util.function.Function;
 @Component
 public class CyclistMapper {
 
-    public Function<CyclistDTO, Cyclist> CyclistDTOToCyclist(String id) {
+    public Function<CyclistDTO, Cyclist> cyclistDTOToCyclist(String id) {
         return cyclistDTO -> {
             var cyclist = new Cyclist();
             cyclist.setCyclistId(cyclistDTO.getCyclistId());
@@ -22,7 +22,7 @@ public class CyclistMapper {
         };
     }
 
-    public Function <Cyclist, CyclistDTO> CyclistToCyclistDTO() {
+    public Function <Cyclist, CyclistDTO> cyclistToCyclistDTO() {
         return cyclist -> new CyclistDTO(
                 cyclist.getCyclistId(),
                 cyclist.getRiderNumber(),
