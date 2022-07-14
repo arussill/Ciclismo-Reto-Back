@@ -18,6 +18,7 @@ public class Team {
 
     @Id
     private String teamId;
+    private String codeTeam;
     private String name;
     private String country;
     private List<Cyclist> cyclists;
