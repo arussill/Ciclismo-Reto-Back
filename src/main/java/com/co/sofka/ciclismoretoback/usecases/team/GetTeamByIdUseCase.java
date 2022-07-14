@@ -7,22 +7,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
 
+import java.util.function.Function;
+
 @Service
 @Validated
-public class RegisterTeamUseCase implements SaveTeam {
+public class GetTeamByIdUseCase implements Function<String, Mono<TeamDTO>> {
 
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
 
-    public RegisterTeamUseCase(TeamRepository teamRepository, TeamMapper teamMapper) {
+    public GetTeamByIdUseCase(TeamRepository teamRepository, TeamMapper teamMapper) {
         this.teamRepository = teamRepository;
         this.teamMapper = teamMapper;
     }
 
     @Override
-    public Mono<TeamDTO> apply(TeamDTO teamDTO) {
-        return teamRepository.save((teamMapper.teamDTOToTeam(null).apply(teamDTO)))
-                .map(team -> teamMapper.teamToTeamDTO().apply(team));
+    public Mono<TeamDTO> apply(String id) {
+        return teamRepository
+                .findById(id)
+                .map(teamMapper.teamToTeamDTO());
     }
-
 }

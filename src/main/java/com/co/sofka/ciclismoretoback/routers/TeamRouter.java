@@ -1,7 +1,7 @@
 package com.co.sofka.ciclismoretoback.routers;
 
 import com.co.sofka.ciclismoretoback.models.TeamDTO;
-import com.co.sofka.ciclismoretoback.usecases.team.RegisterTeamUseCase;
+import com.co.sofka.ciclismoretoback.usecases.team.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -38,16 +38,17 @@ public class TeamRouter {
 
     //Consultar un equipo por id
     @Bean
-    public RouterFunction<ServerResponse> getTeamById(GetTeamUseCase getTeamUseCase) {
+    public RouterFunction<ServerResponse> getTeamById(GetTeamByIdUseCase getTeamByIdUseCase){
         return route(
                 GET("/getTeamById/{id}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(getTeamUseCase.apply(
-                                        request.pathVariable("id")),
+                        .body(BodyInserters.fromPublisher(
+                                getTeamByIdUseCase.apply(request.pathVariable("id")),
                                 TeamDTO.class
                         ))
         );
+
     }
 
     //Actualizar un equipo por id
@@ -61,6 +62,17 @@ public class TeamRouter {
         return route(
                 PUT("/updateTeam/{id}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(TeamDTO.class).flatMap(executor)
+        );
+    }
+
+    //Eliminar un equipo por id
+    @Bean
+    public RouterFunction<ServerResponse> deleteTeam(DeleteTeamUseCase deleteTeamUseCase) {
+        return route(
+                DELETE("/deleteTeam/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.accepted()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(deleteTeamUseCase.apply(request.pathVariable("id")), Void.class))
         );
     }
 
