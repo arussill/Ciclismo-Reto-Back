@@ -21,16 +21,8 @@ public class Team {
 
     @Id
     private String teamId;
-
-    @NotBlank
-    @Indexed(unique = true)
-    @Size(min = 1, max = 3)
     private String codeTeam;
-
-    @NotBlank
     private String name;
-
-    @NotBlank
     private String country;
 
 }

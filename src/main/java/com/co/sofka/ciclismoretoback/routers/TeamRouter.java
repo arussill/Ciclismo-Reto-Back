@@ -76,4 +76,18 @@ public class TeamRouter {
         );
     }
 
+    //Consultar un equipo por pais
+    @Bean
+    public RouterFunction<ServerResponse> getAllTeamsByCountry(GetAllTeamsByCountryUseCase getAllTeamsByCountryUseCase) {
+        return route(
+                GET("/getAllTeamsByCountry/{country}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                getAllTeamsByCountryUseCase.apply(request.pathVariable("country")),
+                                TeamDTO.class
+                        ))
+        );
+    }
+
 }
