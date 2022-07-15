@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.format.annotation.NumberFormat;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Setter
 @Getter
@@ -16,8 +17,10 @@ public class CyclistDTO {
 
     private String cyclistId;
 
-    @NotBlank(message = "El número del competidor es requerido")
-    @Size(min = 1, max = 3, message = "El número del comperidor debe ser de 1 a 3 caracteres")
+    @NotNull(message = "El numero del competidor es requerido")
+    @Indexed(unique = true)
+    @Min(value = 1, message = "El numero del competidor debe ser  minimo 1")
+    @Max(value = 999, message = "El numero del competidor debe ser  maximo de 3 digitos")
     private Integer riderNumber;
 
     @NotBlank(message = "El nombre del ciclista es requerido")

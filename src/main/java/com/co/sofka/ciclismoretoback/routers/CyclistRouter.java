@@ -2,6 +2,11 @@ package com.co.sofka.ciclismoretoback.routers;
 
 import com.co.sofka.ciclismoretoback.models.CyclistDTO;
 import com.co.sofka.ciclismoretoback.usecases.cyclist.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springdoc.core.annotations.RouterOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -20,6 +25,11 @@ public class CyclistRouter {
 
     //Registrar un nuevo ciclista
     @Bean
+    @RouterOperation(beanClass = RegisterCyclistUseCase.class, beanMethod = "apply", operation = @Operation(operationId = "registerCyclist", summary = "Registrar Ciclista", tags = {
+            "Ciclista"
+    }, responses = {@ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "400", description = "Invalid parameters in body supplied"),
+            @ApiResponse(responseCode = "404", description = "Ciclist not found")}))
     public RouterFunction<ServerResponse> registerCyclist(RegisterCyclistUseCase registerCyclistUseCase) {
         Function<CyclistDTO, Mono<ServerResponse>> execute = cyclistDTO ->
                 registerCyclistUseCase.apply(cyclistDTO)
@@ -67,6 +77,12 @@ public class CyclistRouter {
 
     //Eliminar un ciclista por id
     @Bean
+    @RouterOperation(operation = @Operation(operationId = "delete", summary = "Borrar ciclista por su id", tags = {"Ciclista"},
+            parameters = {@Parameter(in = ParameterIn.PATH, name = "Id", description = "Id ciclista")},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation"),
+                    @ApiResponse(responseCode = "400", description = "Invalid parameters in body supplied"),
+                    @ApiResponse(responseCode = "404", description = "Cycling not found")}))
     public RouterFunction<ServerResponse> deleteCyclist(DeleteCyclistUseCase deleteCyclistUseCase) {
         return route(
                 DELETE("/deleteCyclist/{id}").and(accept(MediaType.APPLICATION_JSON)),

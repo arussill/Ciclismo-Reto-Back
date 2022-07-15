@@ -19,15 +19,15 @@ public class TeamDTO {
 
     private String teamId;
 
-    @NotBlank
+    @NotBlank(message = "El codigo del equpipo es requerido")
     @Indexed(unique = true)
-    @Size(min = 1, max = 3)
+    @Size(min = 1, max = 3, message = "El codigo del equipo debe ser de 1 a 3 caracteres")
     private String codeTeam;
 
-    @NotBlank
+    @NotBlank(message = "El nombre del equipo es requerido")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "El pais del equipo es requerido")
     private String country;
 
     private Set<Cyclist> cyclists;
