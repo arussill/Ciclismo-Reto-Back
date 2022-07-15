@@ -40,9 +40,9 @@ public class GetTeamByIdUseCase implements Function<String, Mono<TeamDTO>> {
     }
 
     private Function<TeamDTO, Mono<TeamDTO>> mapTeamAggregate() {
-        return projectDTO ->
-                Mono.just(projectDTO).zipWith(
-                        cyclistRepository.findAllCyclistsByTeamId(projectDTO.getTeamId()).map(cyclistMapper.cyclistToCyclistDTO()).collectList(),
+        return teamDTO ->
+                Mono.just(teamDTO).zipWith(
+                        cyclistRepository.findAllCyclistsByTeamId(teamDTO.getTeamId()).map(cyclistMapper.cyclistToCyclistDTO()).collectList(),
                         (team, cyclist) -> {
                             team.setCyclists(new HashSet(cyclist) );
                             return team;
