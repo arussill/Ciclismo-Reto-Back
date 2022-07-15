@@ -30,7 +30,6 @@ public class TeamDTO {
     @NotBlank
     private String country;
 
-//    @Length.List(@Length(max = 8, message = "Debe tener máximo 8 ciclistas"))
     private Set<Cyclist> cyclists;
 
     public TeamDTO(String teamId, String name, String codeTeam, String country) {

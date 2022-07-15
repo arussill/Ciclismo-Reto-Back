@@ -18,6 +18,7 @@ public class CyclistMapper {
             cyclist.setRiderNumber(cyclistDTO.getRiderNumber());
             cyclist.setTeamId(cyclistDTO.getTeamId());
             cyclist.setRiderNumber(cyclistDTO.getRiderNumber());
+            cyclist.setNationality(cyclistDTO.getNationality());
             return cyclist;
         };
     }

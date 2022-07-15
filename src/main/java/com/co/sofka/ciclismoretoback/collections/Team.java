@@ -27,7 +27,10 @@ public class Team {
     @Size(min = 1, max = 3)
     private String codeTeam;
 
+    @NotBlank
     private String name;
+
+    @NotBlank
     private String country;
 
 }

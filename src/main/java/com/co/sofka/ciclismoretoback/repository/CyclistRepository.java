@@ -9,5 +9,6 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface CyclistRepository extends ReactiveMongoRepository<Cyclist, String> {
     Mono<Cyclist> findByTeamId(String id);
-    Flux<Cyclist> findAllByTeamId(String id);
+    Flux<Cyclist> findAllCyclistsByTeamId(String id);
+
 }

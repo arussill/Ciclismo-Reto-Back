@@ -4,13 +4,13 @@ import com.co.sofka.ciclismoretoback.mappers.TeamMapper;
 import com.co.sofka.ciclismoretoback.models.TeamDTO;
 import com.co.sofka.ciclismoretoback.repository.TeamRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
 
-import javax.validation.Valid;
 import java.util.Objects;
 
 @Service
-@Valid
+@Validated
 public class UpdateTeamByIdUseCase implements SaveTeam{
 
     private final TeamRepository teamRepository;
