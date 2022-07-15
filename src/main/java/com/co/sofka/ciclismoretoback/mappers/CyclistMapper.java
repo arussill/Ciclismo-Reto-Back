@@ -17,6 +17,7 @@ public class CyclistMapper {
             cyclist.setLastName(cyclistDTO.getLastName());
             cyclist.setRiderNumber(cyclistDTO.getRiderNumber());
             cyclist.setTeamId(cyclistDTO.getTeamId());
+            cyclist.setTeamCode(cyclistDTO.getTeamCode());
             cyclist.setRiderNumber(cyclistDTO.getRiderNumber());
             cyclist.setNationality(cyclistDTO.getNationality());
             return cyclist;
@@ -30,6 +31,7 @@ public class CyclistMapper {
                 cyclist.getName(),
                 cyclist.getLastName(),
                 cyclist.getTeamId(),
+                cyclist.getTeamCode(),
                 cyclist.getNationality()
         );
     }

@@ -1,12 +1,7 @@
 package com.co.sofka.ciclismoretoback.routers;
 
 import com.co.sofka.ciclismoretoback.models.CyclistDTO;
-import com.co.sofka.ciclismoretoback.models.TeamDTO;
 import com.co.sofka.ciclismoretoback.usecases.cyclist.*;
-import com.co.sofka.ciclismoretoback.usecases.team.DeleteTeamUseCase;
-import com.co.sofka.ciclismoretoback.usecases.team.GetAllTeamsUseCase;
-import com.co.sofka.ciclismoretoback.usecases.team.GetTeamByIdUseCase;
-import com.co.sofka.ciclismoretoback.usecases.team.UpdateTeamByIdUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -18,7 +13,6 @@ import reactor.core.publisher.Mono;
 import java.util.function.Function;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.*;
-import static org.springframework.web.reactive.function.server.RequestPredicates.DELETE;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
@@ -44,7 +38,7 @@ public class CyclistRouter {
 
     //Consultar un ciclista por id
     @Bean
-    public RouterFunction<ServerResponse> getCyclistById(GetCyclistByIdUseCase getCyclistByIdUseCase){
+    public RouterFunction<ServerResponse> getCyclistById(GetCyclistByIdUseCase getCyclistByIdUseCase) {
         return route(
                 GET("/getCyclistById/{id}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok()
@@ -82,4 +76,17 @@ public class CyclistRouter {
         );
     }
 
+    //Consultar todos los ciclistas por el codigo del equipo
+    @Bean
+    public RouterFunction<ServerResponse> getAllCyclistsByTeamId(GetAllCyclistsByTeamCodeUseCase getAllCyclistsByTeamCodeUseCase) {
+        return route(
+                GET("/getAllCyclistsByTeamCode/{code}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                getAllCyclistsByTeamCodeUseCase.apply(request.pathVariable("code")),
+                                CyclistDTO.class
+                        ))
+        );
+    }
 }

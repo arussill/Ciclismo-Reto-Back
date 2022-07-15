@@ -20,6 +20,7 @@ public class Cyclist {
     private String name;
     private String lastName;
     private String teamId;
+    private String teamCode;
     private String nationality;
 
 

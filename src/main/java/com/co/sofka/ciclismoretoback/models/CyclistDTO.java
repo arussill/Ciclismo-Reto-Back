@@ -14,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class CyclistDTO {
 
     private String cyclistId;
+
     private Integer riderNumber;
 
     @NotBlank
@@ -23,6 +24,8 @@ public class CyclistDTO {
     private String lastName;
 
     private String teamId;
+
+    private String teamCode;
 
     private String nationality;
 }
