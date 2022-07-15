@@ -89,4 +89,18 @@ public class CyclistRouter {
                         ))
         );
     }
+
+    //Consultar un cilcista por la nacionalidad
+    @Bean
+    public RouterFunction<ServerResponse> getAllCyclistsByNationality(GetAllCyclistsByNationalityUseCase getAllCyclistsByNationalityUseCase) {
+        return route(
+                GET("/getAllCyclistsByNationality/{nationality}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                getAllCyclistsByNationalityUseCase.apply(request.pathVariable("nationality")),
+                                CyclistDTO.class
+                        ))
+        );
+    }
 }

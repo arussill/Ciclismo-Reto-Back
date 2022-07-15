@@ -19,7 +19,9 @@ public class Cyclist {
     private Integer riderNumber;
     private String name;
     private String lastName;
+    //TeamId hace referencia al id que genera mongoDB para cada equipo
     private String teamId;
+    //TeamCode hace referencia al codigo que se ingresa alfanumerico de 3 caracteres max
     private String teamCode;
     private String nationality;
 
