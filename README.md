@@ -1,6 +1,6 @@
 # Ciclismo-Reto-Back
 
-## Implementacion de Swager
+## Implementación de Swagger
 
 
 link: http://localhost:8080/webjars/swagger-ui/index.html#/
