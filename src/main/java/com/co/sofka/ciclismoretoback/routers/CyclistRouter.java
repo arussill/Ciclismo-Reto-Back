@@ -29,7 +29,7 @@ public class CyclistRouter {
             "Ciclista"
     }, responses = {@ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Invalid parameters in body supplied"),
-            @ApiResponse(responseCode = "404", description = "Ciclist not found")}))
+            @ApiResponse(responseCode = "404", description = "Cyclist not found")}))
     public RouterFunction<ServerResponse> registerCyclist(RegisterCyclistUseCase registerCyclistUseCase) {
         Function<CyclistDTO, Mono<ServerResponse>> execute = cyclistDTO ->
                 registerCyclistUseCase.apply(cyclistDTO)
@@ -41,6 +41,11 @@ public class CyclistRouter {
 
     //Consultar todos los ciclistas
     @Bean
+    @RouterOperation(beanClass = GetAllCyclistsUseCase.class, beanMethod = "get", operation = @Operation(operationId = "getAllCyclists", summary = "Consultar todos los ciclistas", tags = {
+            "Ciclista"}, responses = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "400", description = "Invalid parameters in body supplied"),
+            @ApiResponse(responseCode = "404", description = "Cyclists not found")}))
     public RouterFunction<ServerResponse> getAllCyclists(GetAllCyclistsUseCase getAllCyclistsUseCase) {
         return route(GET("/getAllCyclists"), request -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromPublisher(getAllCyclistsUseCase.get(), CyclistDTO.class)));
@@ -48,6 +53,12 @@ public class CyclistRouter {
 
     //Consultar un ciclista por id
     @Bean
+    @RouterOperation(operation = @Operation(operationId = "getCyclistById", summary = "Consultar ciclistas por su id", tags = {"Ciclista"},
+            parameters = {@Parameter(in = ParameterIn.PATH, name = "id", description = "id del ciclista")},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation"),
+                    @ApiResponse(responseCode = "400", description = "Invalid parameters in body supplied"),
+                    @ApiResponse(responseCode = "404", description = "Cyclist not found")}))
     public RouterFunction<ServerResponse> getCyclistById(GetCyclistByIdUseCase getCyclistByIdUseCase) {
         return route(
                 GET("/getCyclistById/{id}").and(accept(MediaType.APPLICATION_JSON)),
@@ -63,6 +74,12 @@ public class CyclistRouter {
 
     //Actualizar un ciclista por id
     @Bean
+    @RouterOperation(beanClass = UpdateCyclistByIdUseCase.class, beanMethod = "apply",
+            operation = @Operation(operationId = "updateCyclist", summary = "Actualizar un ciclista por id", tags = {"Ciclista"},
+                    responses = {
+                            @ApiResponse(responseCode = "200", description = "Successful operation"),
+                            @ApiResponse(responseCode = "400", description = "Invalid parameters in body supplied"),
+                            @ApiResponse(responseCode = "404", description = "Cyclist not found")}))
     public RouterFunction<ServerResponse> updateCyclist(UpdateCyclistByIdUseCase updateCyclistByIdUseCase) {
         Function<CyclistDTO, Mono<ServerResponse>> executor = cyclistDTO -> updateCyclistByIdUseCase.apply(cyclistDTO)
                 .flatMap(result -> ServerResponse.ok()
@@ -78,7 +95,7 @@ public class CyclistRouter {
     //Eliminar un ciclista por id
     @Bean
     @RouterOperation(operation = @Operation(operationId = "delete", summary = "Borrar ciclista por su id", tags = {"Ciclista"},
-            parameters = {@Parameter(in = ParameterIn.PATH, name = "Id", description = "Id ciclista")},
+            parameters = {@Parameter(in = ParameterIn.PATH, name = "id", description = "Id ciclista")},
             responses = {
                     @ApiResponse(responseCode = "200", description = "Successful operation"),
                     @ApiResponse(responseCode = "400", description = "Invalid parameters in body supplied"),
@@ -94,7 +111,13 @@ public class CyclistRouter {
 
     //Consultar todos los ciclistas por el codigo del equipo
     @Bean
-    public RouterFunction<ServerResponse> getAllCyclistsByTeamId(GetAllCyclistsByTeamCodeUseCase getAllCyclistsByTeamCodeUseCase) {
+    @RouterOperation(operation = @Operation(operationId = "getAllCyclistsByTeamCode", summary = "Consultar ciclistas por el codigo del equipo", tags = {"Ciclista"},
+            parameters = {@Parameter(in = ParameterIn.PATH, name = "teamCode", description = "codigo del equipo al que pertenece el ciclista")},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation"),
+                    @ApiResponse(responseCode = "400", description = "Invalid parameters in body supplied"),
+                    @ApiResponse(responseCode = "404", description = "Cyclist not found")}))
+    public RouterFunction<ServerResponse> getAllCyclistsByTeamCode(GetAllCyclistsByTeamCodeUseCase getAllCyclistsByTeamCodeUseCase) {
         return route(
                 GET("/getAllCyclistsByTeamCode/{code}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok()
@@ -106,8 +129,14 @@ public class CyclistRouter {
         );
     }
 
-    //Consultar un cilcista por la nacionalidad
+    //Consultar ciclistas por la nacionalidad
     @Bean
+    @RouterOperation(operation = @Operation(operationId = "getAllCyclistsByNationality", summary = "Consultar ciclistas por nacionalidad", tags = {"Ciclista"},
+            parameters = {@Parameter(in = ParameterIn.PATH, name = "nationality", description = "nacionalidad del ciclista")},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation"),
+                    @ApiResponse(responseCode = "400", description = "Invalid parameters in body supplied"),
+                    @ApiResponse(responseCode = "404", description = "Cyclist not found")}))
     public RouterFunction<ServerResponse> getAllCyclistsByNationality(GetAllCyclistsByNationalityUseCase getAllCyclistsByNationalityUseCase) {
         return route(
                 GET("/getAllCyclistsByNationality/{nationality}").and(accept(MediaType.APPLICATION_JSON)),
