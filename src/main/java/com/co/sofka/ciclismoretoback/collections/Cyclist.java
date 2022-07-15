@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Setter
@@ -16,6 +17,7 @@ public class Cyclist {
 
     @Id
     private String cyclistId;
+    @Indexed(unique = true)
     private Integer riderNumber;
     private String name;
     private String lastName;
